@@ -7,4 +7,27 @@
 
         </title>
     </head>
+    <body>
+        <div class="form-container">
+            <form id="create-bank-account-form">
+                <h3>Create a Bank Account</h3>
+
+                <input id='input-name' type="text" name="name" value="" placeholder="Enter the name of your Bank Account..." class="input-text">
+                <br><br>
+
+                <p>Choose an Account Type</p>
+                <select id="account-types" name="account-types">
+                    <option value="1">Checkings</option>
+                    <option value="2">Savings</option>
+                    <option value="3">Credit</option>
+                </select>
+                <br><br>
+
+                <input id='input-starting-balance' type="text" name="starting-balance" value="" placeholder="Enter the starting balance in your Bank Account..." class="input-text">
+
+                <input id='input-low-balance-alert' type="text" name="low-balance-alert" value="" placeholder="Enter the low balance alert for your Bank Account..." class="input-text">
+            </form>
+
+        </div>
+    </body>
 </html>
