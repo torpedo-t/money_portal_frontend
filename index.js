@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const createBankAccountForm = document.querySelector("#create-bank-account-form")
 
     createBankAccountForm.addEventListener("submit", (e) => createBankAccountHandler(e))
+
+    
     })
 
     function getBankAccounts() {
@@ -14,14 +16,19 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(accounts => {
             accounts.data.forEach(bankAccount => {
                 // debugger
-                const bankAccountMarkup = `
-                <div data-id=${bankAccount.id}>
-                <h3>${bankAccount.attributes.name}</h3>
-                </div>
-                `
-                document.querySelector('#bank-account-container').innerHTML += bankAccountMarkup 
+                render(bankAccount)
             })
     })
+}
+
+function render(bankAccount) {
+    const bankAccountMarkup = `
+    <div data-id=${bankAccount.id}>
+    <h3>${bankAccount.attributes.name}</h3>
+    </div>
+    <br><br>`;
+
+    document.querySelector('#bank-account-container').innerHTML += bankAccountMarkup;
 }
 
 function createBankAccountHandler(e) {
@@ -46,14 +53,9 @@ function postFetch(name, accountType, startingBalance, lowBalanceAlert) {
         })
         .then(response => response.json())
         .then(bankAccount => {
-            const bankAccountData = bankAccount.data.attributes
-            const bankAccountMarkup = `
-            <div data-id=${bankAccount.id}>
-            <h3>${bankAccountData.name}</h3>
-            </div>
-            <br><br>`;
-
-            document.querySelector('#bank-account-container').innerHTML += bankAccountMarkup;
-            
+            const bankAccountData = bankAccount.data
+            render(bankAccountData);
         })
     }
+
+
