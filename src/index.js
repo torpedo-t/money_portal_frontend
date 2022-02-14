@@ -16,19 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(accounts => {
             accounts.data.forEach(bankAccount => {
                 // debugger
-                render(bankAccount)
+                let newBankAccount = new BankAccount(bankAccount, bankAccount.attributes)
+                document.querySelector('#bank-account-container').innerHTML += newBankAccount.renderBankAccountCard()
             })
     })
-}
-
-function render(bankAccount) {
-    const bankAccountMarkup = `
-    <div data-id=${bankAccount.id}>
-    <h3>${bankAccount.attributes.name}</h3>
-    </div>
-    <br><br>`;
-
-    document.querySelector('#bank-account-container').innerHTML += bankAccountMarkup;
 }
 
 function createBankAccountHandler(e) {
@@ -54,7 +45,8 @@ function postFetch(name, accountType, startingBalance, lowBalanceAlert) {
         .then(response => response.json())
         .then(bankAccount => {
             const bankAccountData = bankAccount.data
-            render(bankAccountData);
+            let newBankAccount = new BankAccount(bankAccountData, bankAccountData.attributes)
+            document.querySelector('#bank-account-container').innerHTML += newBankAccount.renderBankAccountCard()
         })
     }
 
