@@ -9,6 +9,7 @@ class Transaction {
     }
 
     renderTransactionCard() {
+        // debugger
         return `
         <div id='transaction-card' data-id=${this.id}>
         <p>${this.amount}</p>

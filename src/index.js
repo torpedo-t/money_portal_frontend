@@ -70,16 +70,27 @@ function postFetchBankAccounts(name, accountType, startingBalance, lowBalanceAle
 
     //e.target.dataset.id
     function getBankAccountTransactions(id) {
-        debugger
+        // debugger
         fetch(endPoint + `/${id}` + `/transactions`)
         .then(response => response.json())
         .then(transactions => {
             transactions.data.forEach(transaction => {
-               debugger
+            //    debugger
                 let newTransaction = new Transaction(transaction, transaction.attributes)
+
+                const container = document.querySelector('#container');
+
+                removeAllChildNodes(container);
+
                 document.querySelector('#transaction-card').innerHTML += newTransaction.renderTransactionCard()
             })
         })
     }
 
+    function removeAllChildNodes(parent) {
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
+    }
+    
 

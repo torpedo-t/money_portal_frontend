@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8 name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="src/index.js"></script>
+        <script type="text/javascript" src="src/bankAccount.js"></script>
+        <script type="text/javascript" src="src/transaction.js"></script>
+        <title>
+
+        </title>
+        
+    </head>
+    <body>
+        <div id="container">
+        <div class="form-container">
+
+            <form id="create-bank-account-form">
+                <h3>Create a new bank account</h3>
+
+                <input id="name" type="text" name="name" value="" placeholder="Enter the name of the account" class="input-text">
+                <br><br>
+
+                <p>Choose an account type</p>
+                <select id="account-type" name="account-type">
+                    <option value="Checkings">Checkings</option>
+                    <option value="Savings">Savings</option>
+                    <option value="Credit">Credit</option>
+                </select>
+                <br><br>
+
+                <input id='starting-balance' type="text" name="starting-balance" value="" placeholder="Enter the starting balance" class="input-text">
+
+                <input id='low-balance-alert' type="text" name="low-balance-alert" value="" placeholder="Enter low balance alert" class="input-text">
+                <br><br>
+
+                <input id='create-button' type="submit" name="submit" value="Create New Bank Account">
+            </form>
+            <br><br>
+        </div>
+        <div id="bank-account-card">
+        </div>
+    </div>
+        <div id="transaction-card">
+                
+        </div>
+    </body>
+</html>
