@@ -16,16 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     createBankAccountForm.addEventListener("submit", (e) => createBankAccountHandler(e))
 
-    document.querySelectorAll(".view").forEach(button => {
-        // debugger
-        button.addEventListener('click', (e) => getBankAccountTransactions(e.target.dataset.id))
-        debugger
+    // document.querySelectorAll(".view").forEach(button => {
+        
+    //     button.addEventListener('click', (e) => getBankAccountTransactions(e.target.dataset.id))
     })
-    })
-
-    // document.querySelectorAll(".view").each (button => {
-    //     button.addEventListener('click', (id) => getBankAccountTransactions(target.dataset.id))
-    // }
+    // })
 
     function getBankAccounts() {
         fetch(endPoint)
@@ -48,7 +43,7 @@ function createBankAccountHandler(e) {
     postFetchBankAccounts(nameInput, accountTypeInput, startingBalanceInput, lowBalanceAlertInput)
 }
 
-function postFetch(name, accountType, startingBalance, lowBalanceAlert) {
+function postFetchBankAccounts(name, accountType, startingBalance, lowBalanceAlert) {
         fetch(endPoint, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -68,7 +63,6 @@ function postFetch(name, accountType, startingBalance, lowBalanceAlert) {
     }
 
 
-    //e.target.dataset.id
     function getBankAccountTransactions(id) {
         // debugger
         fetch(endPoint + `/${id}` + `/transactions`)
