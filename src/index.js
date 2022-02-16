@@ -1,13 +1,5 @@
 const endPoint = "http://localhost:3000/api/v1/bank_accounts"
 
-
-// const something = document.querySelectorAll(".view")
-// .each (button => {
-    // button.addEventListener('click', (e) => getBankAccountTransactions(e.target.dataset.id))
-// }
-// )
-
-
 document.addEventListener('DOMContentLoaded', () => {
     getBankAccounts()
     // getBankAccountTransactions()
@@ -74,12 +66,17 @@ function postFetchBankAccounts(name, accountType, startingBalance, lowBalanceAle
 
                 const container = document.querySelector('#container');
 
+                const bankAccountCard = document.querySelector('#bank-account-card')
+
                 removeAllChildNodes(container);
+
+                removeAllChildNodes(bankAccountCard);
 
                 document.querySelector('#transaction-card').innerHTML += newTransaction.renderTransactionCard()
             })
         })
     }
+    
 
     function removeAllChildNodes(parent) {
         while (parent.firstChild) {
