@@ -14,7 +14,7 @@ class BankAccount {
 
     renderBankAccountCard() {
         return `
-        <div id='bank-account-card' data-id=${this.id}>
+        <div id='bank-account-card'>
         <button class="view" onclick="getBankAccountTransactions()" data-id=${this.id}>View</>
         <h3>${this.name}</h3>
         <p>${this.account_type}</p>

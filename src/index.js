@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll(".view").forEach(button => {
         // debugger
         button.addEventListener('click', (e) => getBankAccountTransactions(e.target.dataset.id))
-        
+        debugger
     })
     })
 
@@ -48,7 +48,7 @@ function createBankAccountHandler(e) {
     postFetchBankAccounts(nameInput, accountTypeInput, startingBalanceInput, lowBalanceAlertInput)
 }
 
-function postFetchBankAccounts(name, accountType, startingBalance, lowBalanceAlert) {
+function postFetch(name, accountType, startingBalance, lowBalanceAlert) {
         fetch(endPoint, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -63,7 +63,7 @@ function postFetchBankAccounts(name, accountType, startingBalance, lowBalanceAle
         .then(bankAccount => {
             const bankAccountData = bankAccount.data
             let newBankAccount = new BankAccount(bankAccountData, bankAccountData.attributes)
-            document.querySelector('#bank-account-container').innerHTML += newBankAccount.renderBankAccountCard()
+            document.querySelector('#bank-account-card').innerHTML += newBankAccount.renderBankAccountCard()
         })
     }
 
