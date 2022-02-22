@@ -17,6 +17,27 @@ class Transaction {
         </div>
         <br><br>`;
     }
+
+    renderNewTransactionForm() {
+        return `
+        <div id='new-transaction-form' data-id=${this.id}>
+        <form id='new-transaction-form'>
+        <h3>Create a new transaction</h3>
+        <input id='amount' type='text' name='name' value='' placeholder='Enter amount' class='input-text'>
+        <p>Choose Transaction type:</p>
+        <select id='transaction-type' name='transaction-type'>
+            <option value="Deposit">Deposit</option>
+            <option value="Withdraw">Withdraw</option>
+        </select>
+        <br></br>
+
+        <input id='memo' type='text' name='memo' value='' placeholder="Description" class='text-area'>
+        <br></br>
+
+        <input id='create-button' type='submit' name='submit' value='Create New Transaction'>
+        </form>
+        </div>`;
+    }
 }
 
 
