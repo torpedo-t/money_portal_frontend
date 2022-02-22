@@ -1,42 +1,52 @@
 const endPoint = "http://localhost:3000/api/v1/bank_accounts"
 
+const endPoint1 = "http://localhost:3000/api/v1/bank_accounts/:id/transactions"
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const createBankAccountForm = document.querySelector("#create-bank-account-form")
 
     createBankAccountForm.addEventListener("submit", (e) => createBankAccountHandler(e))
-
+    
     getBankAccounts()
+    
     })
 
     function getBankAccounts() {
+        
         fetch(endPoint)
         .then(response => response.json())
         .then(accounts => {
+            
             accounts.data.forEach(bankAccount => {
                 // debugger
                 let newBankAccount = new BankAccount(bankAccount, bankAccount.attributes)
                 document.querySelector('#bank-account-card').innerHTML += newBankAccount.renderBankAccountCard()
                 
             })
-            // const buttons = document.querySelectorAll(".view");
+            document.querySelectorAll(".view").forEach(button => {
+                console.log(button.dataset.id)
+
+            button.addEventListener('click', (e) => getBankAccountTransactions(e.target.dataset.id))
+    })
+})
+
+            
+            // var buttons = document.querySelectorAll(".view");
             // for (i = 0; i < buttons.length; i++){
-            //     // console.log(buttons)
-            //     // console.log(buttons[i].parentNode)
-            //     // console.log(buttons[i].parentElement.dataset.id)
-            //     buttons[i].addEventListener('click', getBankAccountTransactions(buttons[i].parentElement.dataset.id))
+            //     console.log(buttons)
+            //     console.log(buttons[i].dataset.id)
+            //     console.log(buttons[i].parentElement.dataset.id)
+            //     buttons[i].addEventListener('click', (buttons[i]) => getBankAccountTransactions(buttons[i].parentElement.dataset.id))
             // }
 
             // const buttons = document.querySelectorAll('.view');
             // buttons.forEach(button => {
-            //     button.addEventListener('click', (e) => getBankAccountTransactions(e.target.dataset.id))
+            //     console.log(button)
+            //     console.log(button.parentElement.dataset.id)
+            //     // button.addEventListener('click', getBankAccountTransactions(button.parentElement.dataset.id))
             // })
-            document.querySelectorAll(".view").forEach(button => {
-                console.log(button.parentElement.dataset.id)
 
-            button.addEventListener('click', (e) => getBankAccountTransactions(e.parentElement.dataset.id))
-    })
-})
 }
 
 function createBankAccountHandler(e) {
@@ -74,7 +84,7 @@ function postFetchBankAccounts(name, accountType, startingBalance, lowBalanceAle
         .then(transactions => {
             // debugger
             transactions.data.forEach(transaction => {
-            console.log(transaction)
+            // console.log(transaction)
                 let newTransaction = new Transaction(transaction, transaction.attributes)
 
                 const container = document.querySelector('#container');
@@ -89,12 +99,7 @@ function postFetchBankAccounts(name, accountType, startingBalance, lowBalanceAle
             })
         })
     }
-
-    function goBack() {
-
-    }
     
-
     function removeAllChildNodes(parent) {
         while (parent.firstChild) {
             parent.removeChild(parent.firstChild);
