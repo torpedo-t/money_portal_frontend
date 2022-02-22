@@ -1,17 +1,12 @@
 const endPoint = "http://localhost:3000/api/v1/bank_accounts"
 
 document.addEventListener('DOMContentLoaded', () => {
-    getBankAccounts()
-    // getBankAccountTransactions()
 
     const createBankAccountForm = document.querySelector("#create-bank-account-form")
 
     createBankAccountForm.addEventListener("submit", (e) => createBankAccountHandler(e))
 
-    document.querySelectorAll(".view").forEach(button => {
-        
-        button.addEventListener('click', (e) => getBankAccountTransactions(e.target.dataset.id))
-    })
+    getBankAccounts()
     })
 
     function getBankAccounts() {
@@ -22,8 +17,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 // debugger
                 let newBankAccount = new BankAccount(bankAccount, bankAccount.attributes)
                 document.querySelector('#bank-account-card').innerHTML += newBankAccount.renderBankAccountCard()
+                
             })
+            // const buttons = document.querySelectorAll(".view");
+            // for (i = 0; i < buttons.length; i++){
+            //     // console.log(buttons)
+            //     // console.log(buttons[i].parentNode)
+            //     // console.log(buttons[i].parentElement.dataset.id)
+            //     buttons[i].addEventListener('click', getBankAccountTransactions(buttons[i].parentElement.dataset.id))
+            // }
+
+            // const buttons = document.querySelectorAll('.view');
+            // buttons.forEach(button => {
+            //     button.addEventListener('click', (e) => getBankAccountTransactions(e.target.dataset.id))
+            // })
+            document.querySelectorAll(".view").forEach(button => {
+                console.log(button.parentElement.dataset.id)
+
+            button.addEventListener('click', (e) => getBankAccountTransactions(e.parentElement.dataset.id))
     })
+})
 }
 
 function createBankAccountHandler(e) {
@@ -54,14 +67,14 @@ function postFetchBankAccounts(name, accountType, startingBalance, lowBalanceAle
         })
     }
 
-
     function getBankAccountTransactions(id) {
         // debugger
         fetch(endPoint + `/${id}` + `/transactions`)
         .then(response => response.json())
         .then(transactions => {
+            // debugger
             transactions.data.forEach(transaction => {
-               debugger
+            console.log(transaction)
                 let newTransaction = new Transaction(transaction, transaction.attributes)
 
                 const container = document.querySelector('#container');
@@ -75,6 +88,10 @@ function postFetchBankAccounts(name, accountType, startingBalance, lowBalanceAle
                 document.querySelector('#transaction-card').innerHTML += newTransaction.renderTransactionCard()
             })
         })
+    }
+
+    function goBack() {
+
     }
     
 
