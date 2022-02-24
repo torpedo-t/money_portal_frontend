@@ -5,6 +5,7 @@ class Transaction {
         this.transaction_type = transactionAttributes.transaction_type
         this.memo = transactionAttributes.memo
         this.bank_account = transactionAttributes.bank_account
+        // debugger
         Transaction.all.push(this)
     }
 
@@ -20,10 +21,10 @@ class Transaction {
 
     renderNewTransactionForm() {
         return `
-        <div id='new-transaction-form' data-id=${this.id}>
-        <form id='new-transaction-form'>
+        <div id='create-transaction-form' data-id=${this.id}>
+        <form id='create-transaction-form' data-bank-id=${this.bank_account.id}>
         <h3>Create a new transaction</h3>
-        <input id='amount' type='text' name='name' value='' placeholder='Enter amount' class='input-text'>
+        <input id='amount' type='text' name='amount' value='' placeholder='Enter amount' class='input-text'>
         <p>Choose Transaction type:</p>
         <select id='transaction-type' name='transaction-type'>
             <option value="Deposit">Deposit</option>
@@ -31,7 +32,7 @@ class Transaction {
         </select>
         <br></br>
 
-        <input id='memo' type='text' name='memo' value='' placeholder="Description" class='text-area'>
+        <input id='memo' type='text' name='memo' value='' placeholder="Description" class='input-text'>
         <br></br>
 
         <input id='create-button' type='submit' name='submit' value='Create New Transaction'>
