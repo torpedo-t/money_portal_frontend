@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     getBankAccounts()
 
-
     // const buttons = document.querySelectorAll('.view');
     // buttons.forEach(button => {
     //     button.addEventListener('click', (button) => {
@@ -26,12 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(accounts => {
             accounts.data.forEach(bankAccount => {
                 let newBankAccount = new BankAccount(bankAccount, bankAccount.attributes)
-                document.querySelector('#bank-account-card').innerHTML += newBankAccount.renderBankAccountCard()
+                let insertedHTML = document.querySelector('#bank-account-card')
+                insertedHTML.insertAdjacentHTML("afterbegin", newBankAccount.renderBankAccountCard())
+                // debugger
             })
                 const buttons = document.querySelectorAll('.view');
                 buttons.forEach(button => {
                     button.addEventListener('click', (button) => {
-                        debugger
                     getBankAccountTransactions(button.target.dataset.id)
                 })
             })
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(bankAccount => {
                 const bankAccountData = bankAccount.data
                 let newBankAccount = new BankAccount(bankAccountData, bankAccountData.attributes)
-                document.querySelector('#bank-account-card').innerHTML += newBankAccount.renderBankAccountCard()
+                document.querySelector('#bank-account-card').insertAdjacentHTML("beforebegin", newBankAccount.renderBankAccountCard())
             })
         }
 
@@ -84,11 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const transactionCard = document.querySelector('#transaction-card')
 
-                transactionCard.innerHTML += newTransaction.renderTransactionCard()
+                transactionCard.insertAdjacentHTML("afterbegin", newTransaction.renderTransactionCard())
 
                 const transactionFormContainer = document.querySelector(('.transaction-form-container'))
 
-                transactionFormContainer.innerHTML += newTransaction.renderNewTransactionForm()
+                transactionFormContainer.insertAdjacentHTML("afterbegin", newTransaction.renderNewTransactionForm())
             
                 const createTransactionForm = document.querySelector("#create-transaction-form")
                 
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(transaction => {
             const transactionData = transaction.data
             let newTransaction = new Transaction(transactionData, transactionData.attributes)
-            document.querySelector('#transaction-card').innerHTML += newTransaction.renderTransactionCard()
+            document.querySelector('#transaction-card').insertAdjacentHTML("beforebegin", newTransaction.renderTransactionCard())
         })
     }
 
