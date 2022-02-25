@@ -5,19 +5,29 @@ class Transaction {
         this.transaction_type = transactionAttributes.transaction_type
         this.memo = transactionAttributes.memo
         this.bank_account = transactionAttributes.bank_account
-        // debugger
         Transaction.all.push(this)
     }
 
     renderTransactionCard() {
-        // debugger
+        // iterate through this.bank_account.transactions
+        // each iteration will return transaction.amount, transaction.transaction_type
         return `
         <div id='transaction-card' data-id=${this.id}>
+        <h2>${this.bank_account.name}</h2>
+        <h3>${this.bank_account.starting_balance}</h3>
         <p>${this.amount}</p>
         <p>${this.transaction_type}</p>
         </div>
         <br><br>`;
     }
+
+    // getOwnPropertyNames() {
+    //     Object.getOwnPropertyNames(Transaction.prototype).forEach((amount, transaction_type) => {
+    //         return `
+    //         <p>${amount}</p>
+    //         <p>${transaction_type}</p>`;
+    //     })
+    // }
 
     renderNewTransactionForm() {
         return `
@@ -31,16 +41,12 @@ class Transaction {
             <option value="Withdraw">Withdraw</option>
         </select>
         <br></br>
-
         <input id='memo' type='text' name='memo' value='' placeholder="Description" class='input-text'>
         <br></br>
-
         <input id='create-button' type='submit' name='submit' value='Create New Transaction'>
         </form>
         </div>`;
     }
 }
-
-
 
 Transaction.all = [];

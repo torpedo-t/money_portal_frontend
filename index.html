@@ -11,7 +11,6 @@
         
     </head>
     <body>
-        <div id="container">
         <div class="form-container">
 
             <form id="create-bank-account-form">
@@ -35,20 +34,19 @@
 
                 <input id='create-button' type="submit" name="submit" value="Create New Bank Account">
             </form>
+            <div class='transaction-form-container'>
+        
+            </div>
             <br><br>
         </div>
-    </div>
-
-    <div class='transaction-form-container'>
+        <div id="container">
+        <div id="bank-account-card">
             
-    </div>
-
-    <div id="bank-account-card">
-            
-    </div>
-    <div id="transaction-card">
-    </div>
-
-    <button id="go-back" onclick="getBankAccounts()">Go Back</button>
+        </div>
+        <div id="transaction-card">
+        
+        </div>
+        </div>
+    <button id="go-back" onclick="goBack()">Go Back</button>
     </body>
 </html>

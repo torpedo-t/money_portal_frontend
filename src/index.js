@@ -1,7 +1,5 @@
 const endPoint = "http://localhost:3000/api/v1/bank_accounts"
 
-// const endPoint1 = "http://localhost:3000/api/v1/bank_accounts/:id/transactions"
-
 document.addEventListener('DOMContentLoaded', () => {
 
     const createBankAccountForm = document.querySelector("#create-bank-account-form")
@@ -9,41 +7,36 @@ document.addEventListener('DOMContentLoaded', () => {
     createBankAccountForm.addEventListener("submit", (e) => createBankAccountHandler(e))
     
     getBankAccounts()
-    
-    })
 
-document.addEventListener('DOMContentLoaded', () => {
 
-    const buttons = document.querySelectorAll('.view');
-    buttons.forEach(button => {
-        button.addEventListener('click', (button) => {
-        getBankAccountTransactions(button.target.dataset.id)
-    })
+    // const buttons = document.querySelectorAll('.view');
+    // buttons.forEach(button => {
+    //     button.addEventListener('click', (button) => {
+    //         debugger
+    //         console.log(button)
+    //     getBankAccountTransactions(button.target.dataset.id)
+    //     })
+    //     //debugger
+    // }) 
 })
-})
-    // eventListener 
+     
     function getBankAccounts() {
-        
         fetch(endPoint)
         .then(response => response.json())
         .then(accounts => {
-            
             accounts.data.forEach(bankAccount => {
-                // debugger
                 let newBankAccount = new BankAccount(bankAccount, bankAccount.attributes)
                 document.querySelector('#bank-account-card').innerHTML += newBankAccount.renderBankAccountCard()
-                
             })
                 const buttons = document.querySelectorAll('.view');
                 buttons.forEach(button => {
                     button.addEventListener('click', (button) => {
+                        debugger
                     getBankAccountTransactions(button.target.dataset.id)
                 })
             })
 })
 }
-
-
 
     function createBankAccountHandler(e) {
         e.preventDefault()
@@ -78,49 +71,34 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(endPoint + `/${id}` + `/transactions`)
         .then(response => response.json())
         .then(transactions => {
-            // debugger
             transactions.data.forEach(transaction => {
-            // debugger
                 let newTransaction = new Transaction(transaction, transaction.attributes)
-
-                const container = document.querySelector('#container');
+                // conditions if !newTransaction
+                const createBankAccountForm = document.querySelector('#create-bank-account-form')
 
                 const bankAccountCard = document.querySelector('#bank-account-card')
 
-                removeAllChildNodes(container);
+                createBankAccountForm.setAttribute("style", "display : none")
 
-                removeAllChildNodes(bankAccountCard);
+                bankAccountCard.setAttribute("style", "display : none")
 
-                document.querySelector('#transaction-card').innerHTML += newTransaction.renderTransactionCard()
+                const transactionCard = document.querySelector('#transaction-card')
 
-                document.querySelector('.transaction-form-container').innerHTML += newTransaction.renderNewTransactionForm()
+                transactionCard.innerHTML += newTransaction.renderTransactionCard()
+
+                const transactionFormContainer = document.querySelector(('.transaction-form-container'))
+
+                transactionFormContainer.innerHTML += newTransaction.renderNewTransactionForm()
             
                 const createTransactionForm = document.querySelector("#create-transaction-form")
-                // debugger
+                
                 createTransactionForm.addEventListener("submit", (e) => createTransactionHandler(e))
             })
         })
     }
 
-//     function getNewBankAccountTransactions(id) {
-//         fetch(endPoint + `/${id}` + `/transactions`)
-//         .then(response => response.json())
-//         .then(transactions => {
-//             // debugger
-//             transactions.data.forEach(transaction => {
-//             // debugger
-//                 let newTransaction = new Transaction(transaction, transaction.attributes)
-
-//                 document.querySelector('.transaction-form-container').innerHTML += newTransaction.renderNewTransactionForm()
-                
-//             }) 
-//     })
-// }
-
     function createTransactionHandler(e) {
-        // debugger
         e.preventDefault()
-        // debugger
         const idInput = e.target.dataset.bankId
         const amountInput = document.querySelector("#amount").value
         const transactionTypeInput = document.querySelector("#transaction-type").value
@@ -144,14 +122,31 @@ document.addEventListener('DOMContentLoaded', () => {
             const transactionData = transaction.data
             let newTransaction = new Transaction(transactionData, transactionData.attributes)
             document.querySelector('#transaction-card').innerHTML += newTransaction.renderTransactionCard()
-    
-
         })
     }
-    
-    function removeAllChildNodes(parent) {
-        while (parent.firstChild) {
-            parent.removeChild(parent.firstChild);
-        }
+
+    function goBack() {
+
+        const createBankAccountForm = document.querySelector('#create-bank-account-form')
+
+        const bankAccountCard = document.querySelector('#bank-account-card')
+
+        const transactionCard = document.querySelector('#transaction-card')
+
+        const createTransactionForm = document.querySelector('#create-transaction-form')
+
+        createBankAccountForm.setAttribute("style", "display : inline")
+
+        bankAccountCard.setAttribute("style", "display : inline")
+
+        transactionCard.setAttribute("style", "display : none")
+
+        createTransactionForm.setAttribute("style", "display : none")
     }
+    
+    // function removeAllChildNodes(parent) {
+    //     while (parent.firstChild) {
+    //         parent.removeChild(parent.firstChild);
+    //     }
+    // }
 
