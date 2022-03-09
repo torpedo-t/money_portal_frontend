@@ -8,15 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     getBankAccounts()
 
-    // const buttons = document.querySelectorAll('.view');
-    // buttons.forEach(button => {
-    //     button.addEventListener('click', (button) => {
-    //         debugger
-    //         console.log(button)
-    //     getBankAccountTransactions(button.target.dataset.id)
-    //     })
-    //     //debugger
-    // }) 
 })
      
     function getBankAccounts() {
@@ -25,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(accounts => {
             accounts.data.forEach(bankAccount => {
                 let newBankAccount = new BankAccount(bankAccount, bankAccount.attributes)
-                let insertedHTML = document.querySelector('#bank-account-card')
-                insertedHTML.insertAdjacentHTML("afterbegin", newBankAccount.renderBankAccountCard())
+                let bankAccountCard = document.querySelector('.bank-account-card')
+                bankAccountCard.insertAdjacentHTML("afterbegin", newBankAccount.renderBankAccountCard())
                 // debugger
             })
                 const buttons = document.querySelectorAll('.view');
@@ -62,7 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(bankAccount => {
                 const bankAccountData = bankAccount.data
                 let newBankAccount = new BankAccount(bankAccountData, bankAccountData.attributes)
-                document.querySelector('#bank-account-card').insertAdjacentHTML("beforebegin", newBankAccount.renderBankAccountCard())
+                debugger
+                document.querySelector('.bank-account-card').insertAdjacentHTML("afterbegin", newBankAccount.renderBankAccountCard())
             })
         }
 
@@ -71,39 +63,86 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(endPoint + `/${id}` + `/transactions`)
         .then(response => response.json())
         .then(transactions => {
-            transactions.data.forEach(transaction => {
-                let newTransaction = new Transaction(transaction, transaction.attributes)
-                // conditions if !newTransaction
-                const createBankAccountForm = document.querySelector('#create-bank-account-form')
+            const createBankAccountForm = document.querySelector('#create-bank-account-form')
+    
+            const bankAccountCard = document.querySelector('.bank-account-card')
 
-                const bankAccountCard = document.querySelector('#bank-account-card')
+            const transactionCard = document.querySelector('.transaction-card')
 
-                createBankAccountForm.setAttribute("style", "display : none")
+            transactionCard.setAttribute("style", "display: inline")
 
-                bankAccountCard.setAttribute("style", "display : none")
+            createBankAccountForm.setAttribute("style", "display : none")
 
-                const transactionCard = document.querySelector('#transaction-card')
+            bankAccountCard.setAttribute("style", "display : none")
 
-                transactionCard.insertAdjacentHTML("afterbegin", newTransaction.renderTransactionCard())
+            // if transactions.bank_account_id != id 
+            // remove div element
 
-                const transactionFormContainer = document.querySelector(('.transaction-form-container'))
+            if (transactions.data.length === 0) {
+                    let bankAccounts = BankAccount.all
+                    
+                    bankAccounts.forEach(bankAccount => {
+                        // debugger
+                        let bankAccountCard = document.querySelector("#bank-account-card")
+                    
+                        let bankAccountId = bankAccountCard.dataset.id
 
-                transactionFormContainer.insertAdjacentHTML("afterbegin", newTransaction.renderNewTransactionForm())
+                        if (bankAccount.id === bankAccountId) {
+
+                            // debugger
+                            const transactionCard = document.querySelector('.transaction-card')
+    
+                            transactionCard.insertAdjacentHTML("afterbegin", bankAccount.renderTransactionCard())
+
+                            const transactionFormContainer = document.querySelector(('.transaction-form-container'))
+    
+                            transactionFormContainer.insertAdjacentHTML("afterbegin", bankAccount.renderNewTransactionForm())
+                        
+                            const createTransactionForm = document.querySelector("#create-transaction-form")
+                            
+                            createTransactionForm.addEventListener("submit", (e) => createTransactionHandler(e))
+                        }
+                    })
+                }
+
             
-                const createTransactionForm = document.querySelector("#create-transaction-form")
+            else {
+                    transactions.data.forEach(transaction => {
+
+                    let newTransaction = new Transaction(transaction, transaction.attributes)
+    
+                    const transactionCard = document.querySelector('.transaction-card')
+    
+                    transactionCard.insertAdjacentHTML("afterbegin", newTransaction.renderTransactionCard())
+    
+                    const transactionFormContainer = document.querySelector(('.transaction-form-container'))
+    
+                    transactionFormContainer.insertAdjacentHTML("afterbegin", newTransaction.renderNewTransactionForm())
                 
-                createTransactionForm.addEventListener("submit", (e) => createTransactionHandler(e))
-            })
+                    const createTransactionForm = document.querySelector("#create-transaction-form")
+                    
+                    createTransactionForm.addEventListener("submit", (e) => createTransactionHandler(e))
+                })
+            }
         })
     }
 
     function createTransactionHandler(e) {
         e.preventDefault()
-        const idInput = e.target.dataset.bankId
-        const amountInput = document.querySelector("#amount").value
-        const transactionTypeInput = document.querySelector("#transaction-type").value
-        const memoInput = parseInt(document.querySelector("#memo").value)
-        postFetchBankAccountTransactions(idInput, amountInput, transactionTypeInput, memoInput)
+        // debugger
+        if (!!e.target.dataset.bankId) {
+            const idInput = e.target.dataset.bankId
+            const amountInput = document.querySelector("#amount").value
+            const transactionTypeInput = document.querySelector("#transaction-type").value
+            const memoInput = parseInt(document.querySelector("#memo").value)
+            postFetchBankAccountTransactions(idInput, amountInput, transactionTypeInput, memoInput)
+        } else {
+            const idInput = e.target.dataset.id
+            const amountInput = document.querySelector("#amount").value
+            const transactionTypeInput = document.querySelector("#transaction-type").value
+            const memoInput = parseInt(document.querySelector("#memo").value)
+            postFetchBankAccountTransactions(idInput, amountInput, transactionTypeInput, memoInput)
+        }
     }
 
     function postFetchBankAccountTransactions(id, amount, transactionType, memo) {
@@ -118,10 +157,10 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
         .then(response => response.json())
-        .then(transaction => {
-            const transactionData = transaction.data
+        .then(bankAccountTransaction => {
+            const transactionData = bankAccountTransaction.data
             let newTransaction = new Transaction(transactionData, transactionData.attributes)
-            document.querySelector('#transaction-card').insertAdjacentHTML("beforebegin", newTransaction.renderTransactionCard())
+            document.querySelector('.transaction-card').insertAdjacentHTML("afterbegin", newTransaction.renderTransactionCard())
         })
     }
 
@@ -129,9 +168,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const createBankAccountForm = document.querySelector('#create-bank-account-form')
 
-        const bankAccountCard = document.querySelector('#bank-account-card')
+        const bankAccountCard = document.querySelector('.bank-account-card')
 
-        const transactionCard = document.querySelector('#transaction-card')
+        const transactionCard = document.querySelector('.transaction-card')
 
         const createTransactionForm = document.querySelector('#create-transaction-form')
 

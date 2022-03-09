@@ -12,31 +12,31 @@ class Transaction {
         // iterate through this.bank_account.transactions
         // each iteration will return transaction.amount, transaction.transaction_type
         return `
-        <div id='transaction-card' data-id=${this.id}>
+        <div id='transaction-card' data-id=${this.id} data-bank-id=${this.bank_account.id}>
         <h2>${this.bank_account.name}</h2>
-        <h3>${this.bank_account.starting_balance}</h3>
-        <p>${this.amount}</p>
-        <p>${this.transaction_type}</p>
+        <h3>${this.bank_account.account_type}</h3>
+        <p>Balance: ${this.bank_account.starting_balance}</p>
+        <script type="text/javascript">
+        let transactions = ${this.bank_account.transactions}
+        for (let i = 0; i < transactions.length; i++) {
+            console.log(transactions[i].amount)
+            console.log(transactions[i].transaction_type)
+        }
+        </script>
+        <p>Amount: ${this.amount}</p>
+        <p>Type: ${this.transaction_type}</p>
         </div>
         <br><br>`;
     }
 
-    // getOwnPropertyNames() {
-    //     Object.getOwnPropertyNames(Transaction.prototype).forEach((amount, transaction_type) => {
-    //         return `
-    //         <p>${amount}</p>
-    //         <p>${transaction_type}</p>`;
-    //     })
-    // }
-
     renderNewTransactionForm() {
         return `
-        <div id='create-transaction-form' data-id=${this.id}>
+        <div class='create-transaction-form' data-id=${this.id}>
         <form id='create-transaction-form' data-bank-id=${this.bank_account.id}>
         <h3>Create a new transaction</h3>
         <input id='amount' type='text' name='amount' value='' placeholder='Enter amount' class='input-text'>
         <p>Choose Transaction type:</p>
-        <select id='transaction-type' name='transaction-type'>
+        <select id='transaction-type' name='transaction-type' value=${this.transaction_type}>
             <option value="Deposit">Deposit</option>
             <option value="Withdraw">Withdraw</option>
         </select>
@@ -47,6 +47,14 @@ class Transaction {
         </form>
         </div>`;
     }
+
+        // getOwnPropertyNames() {
+    //     Object.getOwnPropertyNames(Transaction.prototype).forEach((amount, transaction_type) => {
+    //         return `
+    //         <p>${amount}</p>
+    //         <p>${transaction_type}</p>`;
+    //     })
+    // }
 }
 
 Transaction.all = [];
