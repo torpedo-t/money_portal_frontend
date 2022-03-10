@@ -45,7 +45,7 @@ class BankAccount {
         // iterate through this.bank_account.transactions
         // each iteration will return transaction.amount, transaction.transaction_type
         return `
-        <div id='transaction-card' data-id=${this.id}>
+        <div id='transactionCard' data-id=${this.id}>
         <h2>${this.name}</h2>
         <h3>${this.account_type}</h3>
         <script type="text/javascript">

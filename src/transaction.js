@@ -12,7 +12,7 @@ class Transaction {
         // iterate through this.bank_account.transactions
         // each iteration will return transaction.amount, transaction.transaction_type
         return `
-        <div id='transaction-card' data-id=${this.id} data-bank-id=${this.bank_account.id}>
+        <div id='transactionCard' data-id=${this.id} data-bank-id=${this.bank_account.id}>
         <h2>${this.bank_account.name}</h2>
         <h3>${this.bank_account.account_type}</h3>
         <p>Balance: ${this.bank_account.starting_balance}</p>
